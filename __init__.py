@@ -28,3 +28,24 @@ class BookMetadata(Source):
             "cover",
         )
     )
+
+    def identify(
+        self,
+        log,
+        result_queue,
+        abort,
+        title=None,
+        authors=None,
+        identifiers={},
+        timeout=30,
+    ):
+        # ISBN이 있으면 ISBN을 우선적으로 사용한다.
+        isbn = identifiers.get('isbn')
+
+        if isbn:
+            log.info(f'ISBN 검색: {isbn}')
+        elif title:
+            log.info(f'제목 검색: {title}')
+        else:
+            log.info('검색할 ISBN 또는 제목이 없습니다.')
+            return
